@@ -1,4 +1,4 @@
-**CardFlow**
+# **CardFlow**
 CardFlow は React、TypeScript、Tailwind CSS を使って開発されたカード管理アプリです。モバイル操作に最適化された UI で、カードをドラッグして並べ替えたり、ステータスごとに色分けしたりできます。
 
 セットアップ
