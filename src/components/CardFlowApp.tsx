@@ -104,7 +104,7 @@ const CardFlowApp = () => {
     size = 20,
     colorTodo,
     colorDoing,
-    colorDone'
+    colorDone,
   }: {
     size?: number;
     colorTodo: string;
