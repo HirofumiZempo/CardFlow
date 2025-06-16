@@ -155,6 +155,17 @@ const CardFlowApp = () => {
     { name: 'teal', bg: 'bg-teal-600', border: 'border-teal-700', text: 'text-white' }
   ];
 
+  const tailwindColorMap = {
+  'bg-stone-100': '#f5f5f4',
+  'bg-slate-600': '#475569',
+  'bg-amber-600': '#d97706',
+  'bg-red-600': '#dc2626',
+  'bg-yellow-500': '#eab308',
+  'bg-blue-600': '#2563eb',
+  'bg-purple-600': '#9333ea',
+  'bg-teal-600': '#0d9488'
+  };
+  
   // スライドバー表示制御
   const showSlideBarTemporarily = () => {
     setShowSlideBar(true);
@@ -911,7 +922,8 @@ const CardFlowApp = () => {
                             }}
                             className="p-1 rounded-full transition-colors bg-stone-100 border border-stone-300 shadow-sm"
                           >
-                            <CardStackIcon size={16} fillColor={labelSettings[column.cards[0]?.label || 'todo'].bg.replace('bg-', '').replace(/-/g, '_')} />
+                            <CardStackIcon size={16} fillColor={tailwindColorMap[labelSettings[column.cards[0]?.label || 'todo'].bg]} 
+ />
                           </button>
                         </>
                       )}
