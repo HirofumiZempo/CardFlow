@@ -911,7 +911,7 @@ const CardFlowApp = () => {
                             }}
                             className="p-1 rounded-full transition-colors bg-stone-100 border border-stone-300 shadow-sm"
                           >
-                            <CardStackIcon size={16} />
+                            <CardStackIcon size={16} fillColor={labelSettings[column.cards[0]?.label || 'todo'].bg.replace('bg-', '').replace(/-/g, '_')} />
                           </button>
                         </>
                       )}
