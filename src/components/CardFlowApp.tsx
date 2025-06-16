@@ -7,7 +7,7 @@ import { Plus, Settings, X, ArrowLeft, Trash2 } from 'lucide-react';
   The app relies on touch interactions (tap, swipe, drag) instead of mouse hover states.
 */
 
-const CarMo2App = () => {
+const CardFlowApp = () => {
   const [columns, setColumns] = useState([
     {
       id: 1,
@@ -312,18 +312,14 @@ const CarMo2App = () => {
 
   // カードの下側タップ処理
   const handleCardBottomTap = (columnIndex) => {
-    console.log('🔥 === Card bottom tap triggered ===');
-    console.log('🔥 Column index:', columnIndex);
-    
+   
     // 俯瞰画面でない場合は何もしない
     if (selectedColumn !== null) {
-      console.log('❌ Not in overview mode, ignoring tap');
       return;
     }
     
     // 既に表示されている場合は非表示にする
     if (showReorderIcon === columnIndex) {
-      console.log('🔄 Hiding reorder icon');
       setShowReorderIcon(null);
       if (reorderTimeoutRef.current) {
         clearTimeout(reorderTimeoutRef.current);
@@ -331,7 +327,6 @@ const CarMo2App = () => {
       return;
     }
 
-    console.log('✅ Showing reorder icon for column:', columnIndex);
     setShowReorderIcon(columnIndex);
     
     // 3秒後に自動で非表示
@@ -339,7 +334,6 @@ const CarMo2App = () => {
       clearTimeout(reorderTimeoutRef.current);
     }
     reorderTimeoutRef.current = setTimeout(() => {
-      console.log('⏰ Auto-hiding reorder icon');
       setShowReorderIcon(null);
     }, 3000);
   };
@@ -353,7 +347,6 @@ const CarMo2App = () => {
     const isDragHandle = e.target.closest('.drag-handle');
     
     if (!isDragHandle) {
-      console.log('🌍 Global click detected - hiding reorder icon');
       setShowReorderIcon(null);
       if (reorderTimeoutRef.current) {
         clearTimeout(reorderTimeoutRef.current);
@@ -363,8 +356,6 @@ const CarMo2App = () => {
 
   // ドラッグ開始
   const handleDragStart = (e, columnIndex) => {
-    console.log('🚀 === DRAG START ===');
-    console.log('🚀 Column index:', columnIndex);
     
     e.stopPropagation();
     e.preventDefault();
@@ -381,7 +372,6 @@ const CarMo2App = () => {
     setDraggedColumnIndex(columnIndex);
     setDragOverColumnIndex(null);
     
-    console.log('🚀 Drag started at position:', { x: clientX, y: clientY });
   };
 
   // マウス/タッチ移動処理（スロットル付き）
@@ -409,7 +399,6 @@ const CarMo2App = () => {
       if (columnElement) {
         const targetIndex = parseInt(columnElement.dataset.columnIndex);
         if (targetIndex !== draggedColumnIndex && targetIndex !== dragOverColumnIndex) {
-          console.log('🎯 Moving over column:', targetIndex);
           setDragOverColumnIndex(targetIndex);
         }
       } else {
@@ -421,11 +410,7 @@ const CarMo2App = () => {
   // ドラッグ終了
   const handleDragEnd = (e) => {
     if (!isDragging || draggedColumnIndex === null) return;
-    
-    console.log('📦 === DRAG END ===');
-    console.log('📦 Dragged column:', draggedColumnIndex);
-    console.log('📦 Target column:', dragOverColumnIndex);
-    
+   
     // スロットルをクリア
     if (moveThrottleRef.current) {
       clearTimeout(moveThrottleRef.current);
@@ -433,7 +418,6 @@ const CarMo2App = () => {
     
     // 列の入れ替えを実行（ドロップ先が指定されている場合のみ）
     if (dragOverColumnIndex !== null && dragOverColumnIndex !== draggedColumnIndex) {
-      console.log('✅ Performing column reorder');
       
       const newColumns = [...columns];
       const draggedColumn = newColumns[draggedColumnIndex];
@@ -445,9 +429,7 @@ const CarMo2App = () => {
       newColumns.splice(dragOverColumnIndex, 0, draggedColumn);
       
       setColumns(newColumns);
-      console.log('🎉 Column reorder completed');
     } else {
-      console.log('🔄 No valid drop target, returning to original position');
     }
     
     // 状態をリセット
@@ -465,7 +447,6 @@ const CarMo2App = () => {
   // グローバルイベントリスナー
   useEffect(() => {
     if (isDragging) {
-      console.log('🎧 Adding global event listeners');
       
       const handleMouseMove = (e) => handleMove(e);
       const handleMouseUp = (e) => handleDragEnd(e);
@@ -478,7 +459,6 @@ const CarMo2App = () => {
       document.addEventListener('touchend', handleTouchEnd);
       
       return () => {
-        console.log('🎧 Removing global event listeners');
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
         document.removeEventListener('touchmove', handleTouchMove);
@@ -490,12 +470,10 @@ const CarMo2App = () => {
   // グローバルクリックリスナー
   useEffect(() => {
     if (showReorderIcon !== null) {
-      console.log('🎧 Adding global click listener');
       document.addEventListener('click', handleGlobalClick);
       document.addEventListener('touchend', handleGlobalClick);
       
       return () => {
-        console.log('🎧 Removing global click listener');
         document.removeEventListener('click', handleGlobalClick);
         document.removeEventListener('touchend', handleGlobalClick);
       };
@@ -995,13 +973,11 @@ const CarMo2App = () => {
                                   zIndex: 1000
                                 }}
                                 onClick={(e) => {
-                                  console.log('🖱️ TAP HERE clicked');
                                   e.stopPropagation();
                                   e.preventDefault();
                                   handleCardBottomTap(columnIndex);
                                 }}
                                 onTouchEnd={(e) => {
-                                  console.log('👆 TAP HERE touched');
                                   e.stopPropagation();
                                   e.preventDefault();
                                   handleCardBottomTap(columnIndex);
@@ -1021,11 +997,9 @@ const CarMo2App = () => {
                       <div
                         className="drag-handle bg-gray-500 text-white rounded-full p-1.5 shadow-2xl border-2 border-white cursor-move transition-all duration-200 select-none filter grayscale"
                         onMouseDown={(e) => {
-                          console.log('🎯 DRAG HANDLE: Mouse down');
                           handleDragStart(e, columnIndex);
                         }}
                         onTouchStart={(e) => {
-                          console.log('🎯 DRAG HANDLE: Touch start');
                           handleDragStart(e, columnIndex);
                         }}
                         style={{
@@ -1354,4 +1328,4 @@ const CarMo2App = () => {
   );
 };
 
-export default CarMo2App;
+export default CardFlowApp;
