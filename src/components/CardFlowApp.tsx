@@ -100,46 +100,14 @@ const CardFlowApp = () => {
   const moveThrottleRef = useRef(null);
 
   // カスタムカードスタックアイコン
-  const CardStackIcon = ({ size = 20 }) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 80 80"
-      width={size}
-      height={size}
-    >
-      <rect
-        x="1"
-        y="1"
-        width="78"
-        height="25"
-        rx="4"
-        ry="4"
-        fill="white"
-        stroke="black"
-        strokeWidth="2"
-      />
-      <rect
-        x="1"
-        y="15"
-        width="78"
-        height="25"
-        rx="4"
-        ry="4"
-        fill="#fbbc04"
-        stroke="black"
-        strokeWidth="2"
-      />
-      <rect
-        x="1"
-        y="30"
-        width="78"
-        height="49"
-        rx="4"
-        ry="4"
-        fill="#125e7b"
-        stroke="black"
-        strokeWidth="2"
-      />
+  const CardStackIcon = ({ size = 20, fillColor = '#D76F00' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width={size} height={size}>
+      <g>
+        <rect x="28" y="4" width="40" height="56" rx="2" ry="2" fill="#FFFFFF" stroke="#000000" strokeWidth="0.5"/>
+        <rect x="20" y="10" width="40" height="56" rx="2" ry="2" fill={fillColor}/>
+        <path d="M12 16h40a2 2 0 0 1 2 2v52a2 2 0 0 1-2 2H12a2 2 0 0 1-2-2V18a2 2 0 0 1 2-2z" fill="#404C60"/>
+        <path d="M52 72h-8v-8z" fill="#FFFFFF"/>
+      </g>
     </svg>
   );
 
