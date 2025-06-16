@@ -100,14 +100,21 @@ const CardFlowApp = () => {
   const moveThrottleRef = useRef(null);
 
   // カスタムカードスタックアイコン
-  const CardStackIcon = ({ size = 20, fillColor = '#D76F00' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width={size} height={size}>
-      <g>
-        <rect x="28" y="4" width="40" height="56" rx="2" ry="2" fill="#FFFFFF" stroke="#000000" strokeWidth="0.5"/>
-        <rect x="20" y="10" width="40" height="56" rx="2" ry="2" fill={fillColor}/>
-        <path d="M12 16h40a2 2 0 0 1 2 2v52a2 2 0 0 1-2 2H12a2 2 0 0 1-2-2V18a2 2 0 0 1 2-2z" fill="#404C60"/>
-        <path d="M52 72h-8v-8z" fill="#FFFFFF"/>
-      </g>
+  const CardStackIcon = ({
+    size = 20,
+    colorTodo = '#125e7b',
+    colorDoing = '#fbbc04',
+    colorDone = '#ffffff'
+  }) => (
+    <svg width={size} height={size} viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+      {/* Done → 一番上のカード */}
+      <rect x="1" y="1" width="798" height="250" rx="40" ry="40" fill={colorDone} stroke="black" strokeWidth="2" />
+    
+      {/* Doing → 真ん中のカード */}
+      <rect x="1" y="150" width="798" height="250" rx="40" ry="40" fill={colorDoing} stroke="black" strokeWidth="2" />
+    
+      {/* To Do → 一番下のカード */}
+      <rect x="1" y="300" width="798" height="500" rx="40" ry="40" fill={colorTodo} stroke="black" strokeWidth="2" />
     </svg>
   );
 
