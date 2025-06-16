@@ -1,8 +1,8 @@
-import React from 'react'
-import CarMo2App from './components/CarMo2App'
+import React from 'react';
+import CardFlowApp from './components/CardFlowApp';
 
 function App() {
-  return <CarMo2App />
+  return <CardFlowApp />;
 }
 
-export default App
+export default App;
