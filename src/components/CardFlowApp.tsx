@@ -102,9 +102,14 @@ const CardFlowApp = () => {
   // カスタムカードスタックアイコン
   const CardStackIcon = ({
     size = 20,
-    colorTodo = '#125e7b',
-    colorDoing = '#fbbc04',
-    colorDone = '#ffffff'
+    colorTodo,
+    colorDoing,
+    colorDone'
+  }: {
+    size?: number;
+    colorTodo: string;
+    colorDoing: string;
+    colorDone: string;
   }) => (
     <svg width={size} height={size} viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
       {/* Done → 一番上のカード */}
@@ -890,6 +895,11 @@ const CardFlowApp = () => {
                           <div className="text-sm text-stone-500">
                             ({column.cards.length})
                           </div>
+
+                          const colorTodoHex  = tailwindColorMap[labelSettings.todo.bg]  || '#475569';
+                          const colorDoingHex = tailwindColorMap[labelSettings.doing.bg] || '#d97706';
+                          const colorDoneHex  = tailwindColorMap[labelSettings.done.bg]  || '#f5f5f4';
+
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -897,8 +907,12 @@ const CardFlowApp = () => {
                             }}
                             className="p-1 rounded-full transition-colors bg-stone-100 border border-stone-300 shadow-sm"
                           >
-                            <CardStackIcon size={16} fillColor={tailwindColorMap[labelSettings[column.cards[0]?.label || 'todo'].bg]} 
- />
+                            <CardStackIcon
+                                size={16}
+                                colorTodo={colorTodoHex}
+                                colorDoing={colorDoingHex}
+                                colorDone={colorDoneHex}
+                            />
                           </button>
                         </>
                       )}
