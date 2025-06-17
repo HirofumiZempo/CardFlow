@@ -98,6 +98,9 @@ const CardFlowApp = () => {
   const touchStartRef = useRef({ x: 0, y: 0 });
   const cardStackRef = useRef(null);
   const moveThrottleRef = useRef(null);
+  const topScrollRef = useRef(null);
+  const bottomScrollRef = useRef(null);
+  const [scrollAreaWidth, setScrollAreaWidth] = useState(0);
 
   // カスタムカードスタックアイコン
   const CardStackIcon = ({
@@ -477,6 +480,39 @@ const CardFlowApp = () => {
       showSlideBarTemporarily();
     }
   }, [selectedColumn]);
+  
+  // スクロール領域幅更新
+  useEffect(() => {
+    const updateWidth = () => {
+      if (bottomScrollRef.current) {
+        setScrollAreaWidth(bottomScrollRef.current.scrollWidth);
+      }
+    };
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => {
+      window.removeEventListener('resize', updateWidth);
+    };
+  }, [columns, selectedColumn]);
+
+  // 上下スクロールバー同期
+  useEffect(() => {
+    if (!topScrollRef.current || !bottomScrollRef.current) return;
+    const top = topScrollRef.current;
+    const bottom = bottomScrollRef.current;
+    const syncTop = () => {
+      bottom.scrollLeft = top.scrollLeft;
+    };
+    const syncBottom = () => {
+      top.scrollLeft = bottom.scrollLeft;
+    };
+    top.addEventListener('scroll', syncTop);
+    bottom.addEventListener('scroll', syncBottom);
+    return () => {
+      top.removeEventListener('scroll', syncTop);
+      bottom.removeEventListener('scroll', syncBottom);
+    };
+  }, []);
 
   // クリーンアップ
   useEffect(() => {
@@ -830,15 +866,22 @@ const CardFlowApp = () => {
       )}
 
       {/* メインエリア */}
-      <div 
-        className="p-6 overflow-x-auto"
-        onTouchStart={selectedColumn !== null ? undefined : handleTouchStart}
-        onTouchMove={selectedColumn !== null ? undefined : handleTouchMove}
-        style={{ 
-          touchAction: showReorderIcon !== null ? 'none' : selectedColumn !== null ? 'none' : 'pan-x',
-          userSelect: isDragging ? 'none' : 'auto'
-        }}
-      >
+      <div className="p-6">
+        {selectedColumn !== null && (
+          <div ref={topScrollRef} className="overflow-x-auto scrollbar-gray h-3 mb-2">
+            <div style={{ width: scrollAreaWidth }} />
+          </div>
+        )}
+        <div
+          ref={bottomScrollRef}
+          className="overflow-x-auto scrollbar-gray"
+          onTouchStart={selectedColumn !== null ? undefined : handleTouchStart}
+          onTouchMove={selectedColumn !== null ? undefined : handleTouchMove}
+          style={{
+            touchAction: showReorderIcon !== null ? 'none' : selectedColumn !== null ? 'none' : 'pan-x',
+            userSelect: isDragging ? 'none' : 'auto'
+          }}
+        >
         {selectedColumn === null ? (
           // 全列表示
           <div className="flex gap-8 min-w-max max-w-6xl mx-auto">
