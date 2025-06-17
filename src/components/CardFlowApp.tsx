@@ -848,7 +848,10 @@ const CardFlowApp = () => {
               const isBeingDragged = draggedColumnIndex === columnIndex;
               const shouldShowReorderIcon = showReorderIcon === columnIndex;
               const shouldFade = showReorderIcon !== null && showReorderIcon !== columnIndex;
-              
+              const colorTodoHex  = tailwindColorMap[labelSettings.todo.bg]  || '#475569';
+              const colorDoingHex = tailwindColorMap[labelSettings.doing.bg] || '#d97706';
+              const colorDoneHex  = tailwindColorMap[labelSettings.done.bg]  || '#f5f5f4';
+
               return (
                 <div
                   key={column.id}
@@ -895,10 +898,6 @@ const CardFlowApp = () => {
                           <div className="text-sm text-stone-500">
                             ({column.cards.length})
                           </div>
-
-                          const colorTodoHex  = tailwindColorMap[labelSettings.todo.bg]  || '#475569';
-                          const colorDoingHex = tailwindColorMap[labelSettings.doing.bg] || '#d97706';
-                          const colorDoneHex  = tailwindColorMap[labelSettings.done.bg]  || '#f5f5f4';
 
                           <button
                             onClick={(e) => {
