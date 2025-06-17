@@ -40,3 +40,19 @@ body {
     background-color: #ffffff;
   }
 }
+
+/* Custom gray scrollbars */
+.scrollbar-gray {
+  scrollbar-color: #a0aec0 #e5e7eb;
+  scrollbar-width: thin;
+}
+.scrollbar-gray::-webkit-scrollbar {
+  height: 8px;
+}
+.scrollbar-gray::-webkit-scrollbar-track {
+  background: #e5e7eb;
+}
+.scrollbar-gray::-webkit-scrollbar-thumb {
+  background-color: #a0aec0;
+  border-radius: 4px;
+}
